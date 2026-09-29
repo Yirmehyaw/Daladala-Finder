@@ -1,0 +1,124 @@
+{% load static i18n %}<!DOCTYPE html>
+{% get_current_language as LANG %}
+<html lang="{{ LANG }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1E2A33">
+  <title>{% block title %}Daladala Finder{% endblock %} | Dar es Salaam</title>
+  <link rel="stylesheet" href="{% static 'routes/vendor/bootstrap/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'routes/vendor/leaflet/leaflet.css' %}">
+  <link rel="stylesheet" href="{% static 'routes/css/app.css' %}?v=16">
+</head>
+<body>
+  <a class="skip-link" href="#main">{% translate "Skip to content" %}</a>
+
+  <header class="site-header">
+    <nav class="container nav-bar" aria-label="{% translate "Main" %}">
+      <a class="brand" href="{% url 'routes:home' %}">
+        <svg class="brand-mark" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><rect x="3" y="6" width="26" height="18" rx="4" fill="#F5C518"/><rect x="3" y="15" width="26" height="3" fill="#0F766E"/><rect x="7" y="9" width="6" height="4" rx="1" fill="#1E2A33"/><rect x="15" y="9" width="6" height="4" rx="1" fill="#1E2A33"/><rect x="23" y="9" width="3" height="4" rx="1" fill="#1E2A33"/><circle cx="10" cy="25" r="3" fill="#fff" stroke="#1E2A33" stroke-width="2"/><circle cx="23" cy="25" r="3" fill="#fff" stroke="#1E2A33" stroke-width="2"/></svg>
+        <span>Daladala<span class="brand-accent">Finder</span></span>
+      </a>
+      {% with name=request.resolver_match.url_name %}
+      {% if user.is_authenticated %}
+      <div class="nav-links">
+        <a href="{% url 'routes:home' %}" class="{% if name == 'home' or name == 'search' %}active{% endif %}">{% translate "Search" %}</a>
+        <a href="{% url 'routes:route_list' %}" class="{% if name == 'route_list' or name == 'route_detail' or name == 'stop_detail' %}active{% endif %}">{% translate "Routes" %}</a>
+        <a href="{% url 'accounts:my_trips' %}" class="{% if name == 'my_trips' %}active{% endif %}">{% translate "My trips" %}</a>
+        <a href="{% url 'routes:feedback' %}" class="{% if name == 'feedback' %}active{% endif %}">{% translate "Report" %}</a>
+        <details class="user-menu">
+          <summary aria-label="{% translate "Account menu" %}">
+            {% include "accounts/_avatar.html" with profile=user.profile %}
+            <span class="user-name">{% translate "Account" as account %}{{ user.profile.first_name|default:account }}</span>
+          </summary>
+          <div class="user-menu-list">
+            <a href="{% url 'accounts:profile' %}">{% translate "My profile" %}</a>
+            <a href="{% url 'accounts:my_trips' %}">{% translate "My trips" %}</a>
+            <a href="{% url 'accounts:pin_change' %}">{% translate "Change PIN" %}</a>
+            {% if user.is_staff %}
+              <a href="{% url 'accounts:dashboard' %}">{% translate "Staff dashboard" %}</a>
+              <a href="{% url 'admin:index' %}">{% translate "Admin panel" %}</a>
+            {% endif %}
+            <form method="post" action="{% url 'accounts:logout' %}">
+              {% csrf_token %}
+              <button type="submit">{% translate "Log out" %}</button>
+            </form>
+          </div>
+        </details>
+      </div>
+      {% else %}
+      <div class="nav-links">
+        <a href="{% url 'accounts:login' %}" class="{% if name == 'login' %}active{% endif %}">{% translate "Log in" %}</a>
+        <a href="{% url 'accounts:signup' %}" class="{% if name == 'signup' %}active{% endif %}">{% translate "Sign up" %}</a>
+      </div>
+      {% endif %}
+      {% endwith %}
+      {% get_available_languages as LANGUAGES %}
+      <form class="lang-switch" action="{% url 'set_language' %}" method="post" aria-label="{% translate "Language" %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+        {% for code, label in LANGUAGES %}
+          <button type="submit" name="language" value="{{ code }}" lang="{{ code }}" title="{{ label }}"
+                  {% if code == LANG %}class="active" aria-pressed="true"{% else %}aria-pressed="false"{% endif %}>{{ code|upper }}</button>
+        {% endfor %}
+      </form>
+    </nav>
+  </header>
+
+  <main id="main">
+    {% if messages %}
+      <div class="container pt-3">
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} flash" role="status">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <a class="brand brand-small" href="{% url 'routes:home' %}">Daladala<span class="brand-accent">Finder</span></a>
+        <p class="mt-2 mb-0">{% translate "Find which daladala to take in Dar es Salaam, where to change, and what it costs." %}</p>
+      </div>
+      <div>
+        <h2 class="footer-title">{% translate "Pages" %}</h2>
+        {% if user.is_authenticated %}
+          <a href="{% url 'routes:home' %}">{% translate "Search" %}</a>
+          <a href="{% url 'routes:route_list' %}">{% translate "All routes" %}</a>
+          <a href="{% url 'accounts:my_trips' %}">{% translate "My trips" %}</a>
+          <a href="{% url 'routes:feedback' %}">{% translate "Report a problem" %}</a>
+        {% else %}
+          <a href="{% url 'accounts:login' %}">{% translate "Log in" %}</a>
+          <a href="{% url 'accounts:signup' %}">{% translate "Create an account" %}</a>
+        {% endif %}
+      </div>
+      <div>
+        <h2 class="footer-title">{% translate "Good to know" %}</h2>
+        <p class="mb-0">{% translate "Fares are guides only. Confirm with the conductor before you pay." %}</p>
+      </div>
+    </div>
+    <div class="container footer-bottom">{% translate "Student project, Dar es Salaam Institute of Technology" %}</div>
+  </footer>
+
+  <script>
+    // Words used by map.js, in the page's language
+    window.DALADALA_TEXT = {
+      showMyLocation: "{% translate "Show my location" %}",
+      youAreHere: "{% translate "You are here" %}",
+      withinMetres: "{% translate "within %(m)s m" %}",
+      nearestStop: "{% translate "Nearest stop" %}",
+      boardHere: "{% translate "Board here" %}",
+      changeHere: "{% translate "Change here" %}",
+      getOff: "{% translate "Get off" %}",
+      locationBlocked: "{% translate "Location is blocked. Allow it for this site in your browser settings." %}",
+      locationFailed: "{% translate "Could not find your location. Try again outside or with GPS on." %}",
+    };
+  </script>
+  <script src="{% static 'routes/vendor/leaflet/leaflet.js' %}"></script>
+  <script src="{% static 'routes/js/map.js' %}?v=13"></script>
+  <script src="{% static 'routes/js/ui.js' %}?v=12"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,5 @@
+# Extra packages for deployment on a server
+-r requirements.txt
+psycopg[binary]>=3.1     # PostgreSQL driver
+gunicorn>=22.0           # web server
+whitenoise>=6.6          # serves CSS/JS/fonts

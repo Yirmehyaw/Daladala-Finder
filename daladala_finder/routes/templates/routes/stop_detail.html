@@ -1,0 +1,52 @@
+{% extends "routes/base.html" %}
+{% load humanize i18n %}
+{% block title %}{{ stop.name }}{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="container">
+    <a href="{% url 'routes:route_list' %}" class="back-link">&larr; {% translate "All routes" %}</a>
+    <p class="eyebrow">{% translate "Stop" %}</p>
+    <h1 class="page-title">{{ stop.name }}</h1>
+    {% if stop.alternative_name %}<p class="page-sub">{% blocktranslate with other=stop.alternative_name %}Also called {{ other }}.{% endblocktranslate %}</p>{% endif %}
+    <div class="d-flex flex-wrap gap-2 mt-3">
+      <a class="btn btn-go" href="{% url 'routes:home' %}?start={{ stop.name|urlencode }}">{% translate "Plan a trip from here" %}</a>
+      <a class="btn btn-outline-dark" href="{% url 'routes:home' %}?destination={{ stop.name|urlencode }}">{% translate "Plan a trip to here" %}</a>
+    </div>
+  </div>
+</section>
+
+<section class="container py-4">
+  <div class="row g-4">
+    <div class="col-lg-5">
+      <h2 class="panel-title">{% translate "Routes that stop here" %}</h2>
+      <div class="route-grid route-grid-single">
+        {% for route in routes %}
+          <a class="route-card" href="{% url 'routes:route_detail' route.pk %}" style="--route-color: {{ route.color }}">
+            <span class="route-card-top">
+              <span class="route-name">{{ route.name }}</span>
+              <span class="fare-pill">TSh {{ route.fare|intcomma }}</span>
+            </span>
+            {% if route.via %}<span class="route-via">{{ route.via }}</span>{% endif %}
+          </a>
+        {% empty %}
+          <div class="empty">{% translate "No routes pass through this stop yet." %}</div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-lg-7">
+      <div class="map-card">
+        <div id="map" class="map" role="region" aria-label="{% blocktranslate with name=stop.name %}Map showing {{ name }}{% endblocktranslate %}"></div>
+      </div>
+    </div>
+  </div>
+</section>
+{{ map_stops|json_script:"map-stops" }}
+{% endblock %}
+{% block scripts %}
+<script>
+  DaladalaMap.ready(() => {
+    const map = DaladalaMap.create("map");
+    DaladalaMap.showStop(map, JSON.parse(document.getElementById("map-stops").textContent)[0]);
+  });
+</script>
+{% endblock %}

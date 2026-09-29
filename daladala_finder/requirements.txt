@@ -1,0 +1,4 @@
+# Needed to run the project (development and deployment)
+Django>=5.1,<6.0
+psycopg[binary]>=3.1     # PostgreSQL driver (used when DATABASE_URL is set, e.g. in .env)
+Pillow>=10.0             # profile photos (resize and clean uploaded images)

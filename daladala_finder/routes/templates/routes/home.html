@@ -1,0 +1,93 @@
+{% extends "routes/base.html" %}
+{% load i18n %}
+{% block content %}
+<section class="hero">
+  <div class="container">
+    <div class="row g-4 align-items-stretch">
+      <div class="col-lg-5 d-flex flex-column">
+        <p class="eyebrow">{% if user.profile.first_name %}{% blocktranslate with name=user.profile.first_name %}Habari, {{ name }}!{% endblocktranslate %}{% else %}{% translate "Habari!" %}{% endif %}</p>
+        <h1 class="hero-title">{% translate "Unaenda wapi?" %}</h1>
+        <p class="hero-sub">{% translate "Where are you going? Enter two stops and see which daladala to take, where to change, and what it costs." %}</p>
+        <div class="card-panel">
+          {% include "routes/_search_form.html" %}
+        </div>
+        {% if saved_trips %}
+          <div class="popular">
+            <span class="popular-label">&#9733; {% translate "Your trips:" %}</span>
+            {% for t in saved_trips %}
+              <a class="chip chip-saved" href="{% url 'routes:search' %}?start={{ t.start.name|urlencode }}&destination={{ t.destination.name|urlencode }}">{% if t.label %}{{ t.label }}{% else %}{{ t.start }} <span aria-hidden="true">&rarr;</span><span class="visually-hidden">{% translate "to" %}</span> {{ t.destination }}{% endif %}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% if recent_searches %}
+          <div class="popular">
+            <span class="popular-label">{% translate "Recent:" %}</span>
+            {% for t in recent_searches %}
+              <a class="chip" href="{% url 'routes:search' %}?start={{ t.start.name|urlencode }}&destination={{ t.destination.name|urlencode }}">{{ t.start }} <span aria-hidden="true">&rarr;</span><span class="visually-hidden">{% translate "to" %}</span> {{ t.destination }}</a>
+            {% endfor %}
+          </div>
+        {% elif popular_trips and not saved_trips %}
+          <div class="popular">
+            <span class="popular-label">{% translate "Popular:" %}</span>
+            {% for a, b in popular_trips %}
+              <a class="chip" href="{% url 'routes:search' %}?start={{ a|urlencode }}&destination={{ b|urlencode }}">{{ a }} <span aria-hidden="true">&rarr;</span><span class="visually-hidden">{% translate "to" %}</span> {{ b }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+      <div class="col-lg-7">
+        <div class="map-card">
+          <div id="map" class="map map-hero" role="region" aria-label="{% translate "Map of daladala routes and stops" %}"></div>
+          <div class="map-legend" aria-label="{% translate "Routes on the map" %}">
+            {% for r in map_routes %}
+              <a href="{% url 'routes:route_detail' r.id %}" class="legend-item" style="--route-color: {{ r.color }}">{{ r.route }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container py-5">
+  <div class="stats">
+    <div class="stat"><span class="stat-num">{{ route_count }}</span><span class="stat-label">{% translate "routes" %}</span></div>
+    <div class="stat"><span class="stat-num">{{ stop_count }}</span><span class="stat-label">{% translate "stops" %}</span></div>
+    <div class="stat"><span class="stat-num">{% translate "Free" %}</span><span class="stat-label">{% translate "no cost to use" %}</span></div>
+  </div>
+
+  <h2 class="section-title">{% translate "How it works" %}</h2>
+  <ol class="steps">
+    <li class="step">
+      <span class="step-num">1</span>
+      <h3>{% translate "Choose your stops" %}</h3>
+      <p>{% translate "Type where you are and where you are going. Stop names show as you type." %}</p>
+    </li>
+    <li class="step">
+      <span class="step-num">2</span>
+      <h3>{% translate "Compare options" %}</h3>
+      <p>{% translate "See direct daladalas first, then trips with a change, cheapest at the top." %}</p>
+    </li>
+    <li class="step">
+      <span class="step-num">3</span>
+      <h3>{% translate "Ride with confidence" %}</h3>
+      <p>{% translate "Know where to board, which way the daladala is heading, and where to get off." %}</p>
+    </li>
+  </ol>
+</section>
+
+{{ map_stops|json_script:"map-stops" }}
+{{ map_routes|json_script:"map-routes" }}
+{% endblock %}
+{% block scripts %}
+<script>
+  DaladalaMap.ready(() => {
+    const map = DaladalaMap.create("map");
+    DaladalaMap.showNetwork(
+      map,
+      JSON.parse(document.getElementById("map-routes").textContent),
+      JSON.parse(document.getElementById("map-stops").textContent)
+    );
+  });
+</script>
+{% endblock %}

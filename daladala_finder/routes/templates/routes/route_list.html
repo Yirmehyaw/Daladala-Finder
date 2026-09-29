@@ -1,0 +1,43 @@
+{% extends "routes/base.html" %}
+{% load humanize i18n %}
+{% block title %}{% translate "All routes" %}{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="container">
+    <p class="eyebrow">{% translate "Network" %}</p>
+    <h1 class="page-title">{% translate "All routes" %}</h1>
+    <p class="page-sub">{% translate "Every daladala route in the system. Daladalas run in both directions." %}</p>
+    <div class="filter-box">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m20 20-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <label class="visually-hidden" for="route-filter">{% translate "Filter routes or stops" %}</label>
+      <input id="route-filter" class="form-control form-control-lg" type="search" placeholder="{% translate "Filter by route or stop, e.g. Mwenge" %}" data-filter=".route-card">
+    </div>
+  </div>
+</section>
+
+<section class="container py-4">
+  <div class="route-grid">
+    {% for route in routes %}
+      {% with stops=route.route_stops.all %}
+      <a class="route-card" href="{% url 'routes:route_detail' route.pk %}" style="--route-color: {{ route.color }}"
+         data-search="{{ route.name|lower }} {% for rs in stops %}{{ rs.stop.name|lower }} {% endfor %}">
+        <span class="route-card-top">
+          <span class="route-name">{{ route.name }}</span>
+          <span class="fare-pill">TSh {{ route.fare|intcomma }}</span>
+        </span>
+        {% if route.via %}<span class="route-via">{{ route.via }}</span>{% endif %}
+        <span class="route-ends">
+          <span class="dot dot-start" aria-hidden="true"></span>{{ stops.0.stop.name }}
+          <span class="ends-line" aria-hidden="true"></span>
+          <span class="dot dot-end" aria-hidden="true"></span>{% for rs in stops %}{% if forloop.last %}{{ rs.stop.name }}{% endif %}{% endfor %}
+        </span>
+        <span class="route-meta">{% blocktranslate count counter=stops|length %}{{ counter }} stop{% plural %}{{ counter }} stops{% endblocktranslate %}</span>
+      </a>
+      {% endwith %}
+    {% empty %}
+      <div class="empty">{% blocktranslate %}No routes yet. Add some in the <a href="/admin/">admin panel</a>.{% endblocktranslate %}</div>
+    {% endfor %}
+  </div>
+  <p class="empty no-match" hidden>{% translate "No route matches your filter." %}</p>
+</section>
+{% endblock %}

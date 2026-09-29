@@ -1,0 +1,25 @@
+# Render.com Blueprint: New > Blueprint > pick this GitHub repository.
+# You will be asked for the values marked "sync: false".
+# The Django project is in the daladala_finder/ folder (rootDir).
+services:
+  - type: web
+    name: daladala-finder
+    runtime: python
+    rootDir: daladala_finder
+    plan: free
+    region: frankfurt            # closest Render region to Tanzania
+    buildCommand: bash build.sh
+    startCommand: gunicorn daladala_finder.wsgi --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL        # paste your Neon connection string
+        sync: false
+      - key: DJANGO_SUPERUSER_USERNAME   # your phone as +255..., for the admin panel
+        sync: false
+      - key: DJANGO_SUPERUSER_PASSWORD   # a strong password for the admin panel
+        sync: false

@@ -1,0 +1,28 @@
+{% extends "routes/base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Create an account" %}{% endblock %}
+{% block content %}
+<section class="auth-wrap">
+  <div class="auth-card auth-card-wide">
+    <div class="auth-intro">
+      <p class="eyebrow">{% translate "Free, takes one minute" %}</p>
+      <h1 class="page-title">{% translate "Create an account" %}</h1>
+      <p class="page-sub">{% translate "Your account keeps your saved trips and search history on any phone or computer." %}</p>
+    </div>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      <div class="row g-0 gx-3">
+        <div class="col-12">{% with field=form.full_name %}{% include "accounts/_field.html" %}{% endwith %}</div>
+        <div class="col-md-6">{% with field=form.phone %}{% include "accounts/_field.html" %}{% endwith %}</div>
+        <div class="col-md-6">{% with field=form.email %}{% include "accounts/_field.html" %}{% endwith %}</div>
+        <div class="col-12">{% with field=form.home_area %}{% include "accounts/_field.html" %}{% endwith %}</div>
+        <div class="col-md-6">{% with field=form.pin1 %}{% include "accounts/_field.html" %}{% endwith %}</div>
+        <div class="col-md-6">{% with field=form.pin2 %}{% include "accounts/_field.html" %}{% endwith %}</div>
+      </div>
+      <input type="hidden" name="next" value="{{ next }}">
+      <button type="submit" class="btn btn-go btn-lg w-100 mt-2">{% translate "Create account" %}</button>
+    </form>
+    <p class="auth-switch">{% translate "Already have an account?" %} <a href="{% url 'accounts:login' %}">{% translate "Log in" %}</a></p>
+  </div>
+</section>
+{% endblock %}

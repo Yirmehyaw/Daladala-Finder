@@ -1,0 +1,49 @@
+{% extends "routes/base.html" %}
+{% load humanize i18n %}
+{% block title %}{{ route.name }}{% endblock %}
+{% block content %}
+<section class="page-head route-head" style="--route-color: {{ route.color }}">
+  <div class="container">
+    <a href="{% url 'routes:route_list' %}" class="back-link">&larr; {% translate "All routes" %}</a>
+    <h1 class="page-title">{{ route.name }}</h1>
+    <div class="route-facts">
+      <span class="fare-pill">{% blocktranslate with fare=route.fare|intcomma %}TSh {{ fare }} full fare{% endblocktranslate %}</span>
+      <span class="tag">{% blocktranslate count counter=stops|length %}{{ counter }} stop{% plural %}{{ counter }} stops{% endblocktranslate %}</span>
+      {% if route.via %}<span class="tag">{{ route.via }}</span>{% endif %}
+      <span class="tag">{% translate "Runs both directions" %}</span>
+    </div>
+  </div>
+</section>
+
+<section class="container py-4">
+  <div class="row g-4">
+    <div class="col-lg-5">
+      <div class="card-panel">
+        <h2 class="panel-title">{% translate "Stops in order" %}</h2>
+        <ol class="stop-sequence" style="--route-color: {{ route.color }}">
+          {% for stop in stops %}
+            <li class="{% if forloop.first or forloop.last %}is-end{% endif %}">
+              <a href="{% url 'routes:stop_detail' stop.pk %}">{{ stop.name }}</a>
+            </li>
+          {% endfor %}
+        </ol>
+      </div>
+      <a class="report-link" href="{% url 'routes:feedback' %}?route={{ route.pk }}">{% translate "Something wrong with this route? Report it" %}</a>
+    </div>
+    <div class="col-lg-7">
+      <div class="map-card sticky-map">
+        <div id="map" class="map map-tall" role="region" aria-label="{% blocktranslate with name=route.name %}Map of {{ name }}{% endblocktranslate %}"></div>
+      </div>
+    </div>
+  </div>
+</section>
+{{ map_route|json_script:"map-route" }}
+{% endblock %}
+{% block scripts %}
+<script>
+  DaladalaMap.ready(() => {
+    const map = DaladalaMap.create("map");
+    DaladalaMap.drawRoute(map, JSON.parse(document.getElementById("map-route").textContent));
+  });
+</script>
+{% endblock %}

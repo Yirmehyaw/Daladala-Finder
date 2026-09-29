@@ -1,0 +1,114 @@
+{% extends "routes/base.html" %}
+{% load humanize i18n %}
+{% block title %}{% blocktranslate %}{{ start }} to {{ destination }}{% endblocktranslate %}{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="container">
+    <p class="eyebrow">{% translate "Trip options" %}</p>
+    <h1 class="trip-title">
+      <span class="dot dot-start" aria-hidden="true"></span>{{ start }}
+      <span class="trip-arrow" aria-hidden="true">&rarr;</span><span class="visually-hidden">{% translate "to" %}</span>
+      <span class="dot dot-end" aria-hidden="true"></span>{{ destination }}
+    </h1>
+    <div class="d-flex flex-wrap align-items-start gap-2 mt-3">
+      <form method="post" action="{% url 'accounts:save_trip' %}">
+        {% csrf_token %}
+        <input type="hidden" name="start" value="{{ start.pk }}">
+        <input type="hidden" name="destination" value="{{ destination.pk }}">
+        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+        {% if is_saved %}
+          <button type="submit" class="btn btn-save is-saved" aria-pressed="true">&#9733; {% translate "Saved" %}</button>
+        {% else %}
+          <button type="submit" class="btn btn-save" aria-pressed="false">&#9734; {% translate "Save trip" %}</button>
+        {% endif %}
+      </form>
+    <details class="edit-search">
+      <summary>{% translate "Change search" %}</summary>
+      <div class="pt-3">{% include "routes/_search_form.html" %}</div>
+    </details>
+    </div>
+  </div>
+</section>
+
+<section class="container py-4">
+  <div class="row g-4">
+    <div class="col-lg-5">
+      {% if journeys %}
+        <p class="results-count">{% blocktranslate count counter=journeys|length %}{{ counter }} option, fewest changes and cheapest first. Tap one to see it on the map.{% plural %}{{ counter }} options, fewest changes and cheapest first. Tap one to see it on the map.{% endblocktranslate %}</p>
+        {% for journey in journeys %}
+          <button type="button" class="ticket{% if forloop.first %} is-active{% endif %}" data-journey="{{ forloop.counter0 }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}">
+            <span class="ticket-head">
+              <span class="ticket-fare"><small>TSh</small> {{ journey.total_fare|intcomma }}</span>
+              <span class="ticket-tags">
+                {% if forloop.first %}<span class="tag tag-best">{% translate "Best" %}</span>{% endif %}
+                {% if journey.transfers == 0 %}<span class="tag tag-direct">{% translate "Direct" %}</span>
+                {% else %}<span class="tag tag-change">{% blocktranslate count counter=journey.transfers %}{{ counter }} change{% plural %}{{ counter }} changes{% endblocktranslate %}</span>{% endif %}
+                <span class="tag">{% blocktranslate count counter=journey.total_stops %}{{ counter }} stop{% plural %}{{ counter }} stops{% endblocktranslate %}</span>
+              </span>
+            </span>
+            <ol class="legs">
+              {% for leg in journey.legs %}
+                {% if not forloop.first %}
+                  <li class="transfer"><span>{% blocktranslate with stop=leg.board %}Change at <strong>{{ stop }}</strong>{% endblocktranslate %}</span></li>
+                {% endif %}
+                <li class="leg" style="--route-color: {{ leg.route.color }}">
+                  <span class="leg-top">
+                    <span class="leg-route">{{ leg.route.name }}</span>
+                    <span class="leg-fare">TSh {{ leg.fare|intcomma }}</span>
+                  </span>
+                  <span class="leg-detail">
+                    {% blocktranslate trimmed count counter=leg.stop_count with board=leg.board towards=leg.towards alight=leg.alight %}
+                      Board at <strong>{{ board }}</strong> (heading to {{ towards }}),
+                      get off at <strong>{{ alight }}</strong> after {{ counter }} stop.
+                    {% plural %}
+                      Board at <strong>{{ board }}</strong> (heading to {{ towards }}),
+                      get off at <strong>{{ alight }}</strong> after {{ counter }} stops.
+                    {% endblocktranslate %}
+                  </span>
+                </li>
+              {% endfor %}
+            </ol>
+          </button>
+        {% endfor %}
+      {% else %}
+        <div class="empty">
+          <svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m9.5 7.5 5 5m0-5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <h2>{% translate "No daladala connects these stops yet" %}</h2>
+          <p>{% translate "Our data covers only some routes so far. Try a nearby main stop like Kariakoo, Ubungo or Mwenge." %}</p>
+          <a class="btn btn-outline-dark" href="{% url 'routes:feedback' %}">{% translate "Tell us about a route" %}</a>
+        </div>
+      {% endif %}
+    </div>
+    <div class="col-lg-7">
+      <div class="map-card sticky-map">
+        <div id="map" class="map map-tall" role="region" aria-label="{% translate "Map of the selected journey" %}"></div>
+      </div>
+    </div>
+  </div>
+</section>
+{{ map_journeys|json_script:"map-journeys" }}
+{% endblock %}
+{% block scripts %}
+<script>
+  DaladalaMap.ready(() => {
+    const map = DaladalaMap.create("map");
+    const journeys = JSON.parse(document.getElementById("map-journeys").textContent);
+    let layer = journeys.length ? DaladalaMap.drawLegs(map, journeys[0]) : null;
+
+    document.querySelectorAll(".ticket").forEach((ticket) => {
+      ticket.addEventListener("click", () => {
+        document.querySelectorAll(".ticket").forEach((t) => {
+          t.classList.remove("is-active");
+          t.setAttribute("aria-pressed", "false");
+        });
+        ticket.classList.add("is-active");
+        ticket.setAttribute("aria-pressed", "true");
+        if (layer) layer.remove();
+        layer = DaladalaMap.drawLegs(map, journeys[Number(ticket.dataset.journey)]);
+        // On phones the map is below the list, so bring it into view
+        if (window.innerWidth < 992) document.getElementById("map").scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+    });
+  });
+</script>
+{% endblock %}

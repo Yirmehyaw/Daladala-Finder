@@ -1,0 +1,87 @@
+{% extends "routes/base.html" %}
+{% load humanize i18n %}
+{% block title %}{% translate "My trips" %}{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="container">
+    <p class="eyebrow">{% translate "Your account" %}</p>
+    <h1 class="page-title">{% translate "My trips" %}</h1>
+    <p class="page-sub">{% translate "Trips you saved, and the trips you searched for recently." %}</p>
+  </div>
+</section>
+
+<section class="container py-4">
+  <div class="row g-4">
+    <div class="col-lg-6">
+      <h2 class="panel-title">&#9733; {% translate "Saved trips" %}</h2>
+      {% for trip in saved %}
+        <div class="trip-card">
+          <a class="trip-main" href="{% url 'routes:search' %}?start={{ trip.start.name|urlencode }}&destination={{ trip.destination.name|urlencode }}">
+            {% if trip.label %}<span class="trip-label">{{ trip.label }}</span>{% endif %}
+            <span class="trip-stops"><span class="dot dot-start" aria-hidden="true"></span>{{ trip.start }} <span aria-hidden="true">&rarr;</span><span class="visually-hidden">{% translate "to" %}</span> <span class="dot dot-end" aria-hidden="true"></span>{{ trip.destination }}</span>
+          </a>
+          <details class="trip-edit">
+            <summary>{% translate "Edit" %}</summary>
+            <form method="post" action="{% url 'accounts:rename_trip' trip.pk %}" class="d-flex gap-2 mt-2">
+              {% csrf_token %}
+              <label class="visually-hidden" for="label-{{ trip.pk }}">{% translate "Trip name" %}</label>
+              <input id="label-{{ trip.pk }}" name="label" class="form-control" maxlength="60" value="{{ trip.label }}" placeholder="{% translate "Name, e.g. To college" %}">
+              <button class="btn btn-go" type="submit">{% translate "Save" %}</button>
+            </form>
+            <form method="post" action="{% url 'accounts:delete_trip' trip.pk %}" class="mt-2">
+              {% csrf_token %}
+              <button class="btn btn-link text-danger p-0" type="submit">{% translate "Remove this trip" %}</button>
+            </form>
+          </details>
+        </div>
+      {% empty %}
+        <div class="empty">
+          <p class="mb-2"><strong>{% translate "No saved trips yet." %}</strong></p>
+          <p class="mb-0">{% blocktranslate %}Search for a trip, then tap <strong>&#9734; Save trip</strong> on the results page.{% endblocktranslate %}</p>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="col-lg-6" id="history">
+      <div class="d-flex justify-content-between align-items-center mb-3 gap-2 flex-wrap">
+        <h2 class="panel-title mb-0">{% translate "Recent searches" %}</h2>
+        {% if history %}
+          <form method="post" action="{% url 'accounts:clear_history' %}">
+            {% csrf_token %}
+            <button class="btn btn-sm btn-outline-dark" type="submit">{% translate "Clear history" %}</button>
+          </form>
+        {% endif %}
+      </div>
+      {% if history %}
+        <ul class="history-list">
+          {% for item in history %}
+            <li>
+              <a href="{% url 'routes:search' %}?start={{ item.start.name|urlencode }}&destination={{ item.destination.name|urlencode }}">
+                <span class="history-trip">{{ item.start }} &rarr; {{ item.destination }}</span>
+                <span class="history-meta">
+                  {{ item.searched_at|naturaltime }}
+                  {% if item.cheapest_fare %} &middot; {% blocktranslate with fare=item.cheapest_fare|intcomma %}from TSh {{ fare }}{% endblocktranslate %}{% else %} &middot; {% translate "no route found" %}{% endif %}
+                </span>
+              </a>
+              <form method="post" action="{% url 'accounts:save_trip' %}">
+                {% csrf_token %}
+                <input type="hidden" name="start" value="{{ item.start_id }}">
+                <input type="hidden" name="destination" value="{{ item.destination_id }}">
+                <input type="hidden" name="next" value="{% url 'accounts:my_trips' %}#history">
+                {% if item.is_saved %}
+                  <button class="star-btn is-saved" type="submit" title="{% translate "Remove from saved trips" %}" aria-label="{% blocktranslate with start=item.start destination=item.destination %}Remove {{ start }} to {{ destination }} from saved trips{% endblocktranslate %}">&#9733;</button>
+                {% else %}
+                  <button class="star-btn" type="submit" title="{% translate "Save this trip" %}" aria-label="{% blocktranslate with start=item.start destination=item.destination %}Save {{ start }} to {{ destination }}{% endblocktranslate %}">&#9734;</button>
+                {% endif %}
+              </form>
+            </li>
+          {% endfor %}
+        </ul>
+        <p class="text-muted small mt-2">{% blocktranslate count counter=total_searches %}{{ counter }} search in total.{% plural %}{{ counter }} searches in total.{% endblocktranslate %}</p>
+      {% else %}
+        <div class="empty"><p class="mb-0">{% translate "Your searches will appear here." %}</p></div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}

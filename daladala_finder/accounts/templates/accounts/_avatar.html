@@ -1,0 +1,2 @@
+{# Round profile picture. Use: {% include "accounts/_avatar.html" with profile=user.profile size="lg" %} (size: sm, lg or empty) #}
+{% if profile.photo %}<img class="avatar avatar-photo{% if size %} avatar-{{ size }}{% endif %}" src="{{ profile.photo.url }}" alt="" width="30" height="30" loading="lazy">{% else %}<span class="avatar{% if size %} avatar-{{ size }}{% endif %}" aria-hidden="true">{{ profile.first_name|default:"?"|first|upper }}</span>{% endif %}

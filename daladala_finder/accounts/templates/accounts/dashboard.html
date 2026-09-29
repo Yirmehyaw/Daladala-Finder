@@ -1,0 +1,117 @@
+{% extends "routes/base.html" %}
+{% load i18n phone_tags %}
+{% block title %}{% translate "Staff dashboard" %}{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="container">
+    <p class="eyebrow">{% translate "Staff only" %}</p>
+    <h1 class="page-title">{% translate "Staff dashboard" %}</h1>
+    <p class="page-sub">{% translate "Everyone who registered, and every comment they sent." %}</p>
+    <div class="dash-jump">
+      <a href="#registrations">{% translate "Registrations" %}</a>
+      <a href="#comments">{% translate "Comments" %}</a>
+      <a href="{% url 'admin:index' %}">{% translate "Admin panel" %}</a>
+    </div>
+  </div>
+</section>
+
+<section class="container py-4">
+  <div class="stats stats-4">
+    <div class="stat"><span class="stat-num">{{ totals.users }}</span><span class="stat-label">{% translate "registered users" %}</span></div>
+    <div class="stat"><span class="stat-num">{{ totals.new_users }}</span><span class="stat-label">{% translate "new in the last 7 days" %}</span></div>
+    <div class="stat"><span class="stat-num">{{ totals.comments }}</span><span class="stat-label">{% translate "comments" %}</span></div>
+    <a class="stat stat-link" href="?status=new#comments"><span class="stat-num">{{ totals.unread }}</span><span class="stat-label">{% translate "not checked yet" %}</span></a>
+  </div>
+
+  {# ---------------- registrations ---------------- #}
+  <div class="dash-head" id="registrations">
+    <h2 class="panel-title mb-0">{% translate "Registrations" %}</h2>
+    <form method="get" class="dash-search" role="search">
+      {% if status %}<input type="hidden" name="status" value="{{ status }}">{% endif %}
+      <label class="visually-hidden" for="user-q">{% translate "Search users" %}</label>
+      <input id="user-q" name="q" value="{{ q }}" class="form-control" type="search"
+             placeholder="{% translate "Name, phone, email or area" %}">
+      <button class="btn btn-go" type="submit">{% translate "Search" %}</button>
+      {% if q %}<a class="btn btn-outline-dark" href="?{% if status %}status={{ status }}{% endif %}#registrations">{% translate "Clear" %}</a>{% endif %}
+    </form>
+  </div>
+  {% if q %}<p class="text-muted small">{% blocktranslate count counter=users|length %}{{ counter }} user matches “{{ q }}”.{% plural %}{{ counter }} users match “{{ q }}”.{% endblocktranslate %}</p>{% endif %}
+
+  <div class="table-responsive dash-table">
+    <table class="table align-middle mb-0">
+      <thead>
+        <tr>
+          <th scope="col">{% translate "Name" %}</th>
+          <th scope="col">{% translate "Phone" %}</th>
+          <th scope="col">{% translate "Email" %}</th>
+          <th scope="col">{% translate "Home area" %}</th>
+          <th scope="col">{% translate "Registered" %}</th>
+          <th scope="col" class="text-end">{% translate "Searches" %}</th>
+          <th scope="col" class="text-end">{% translate "Saved trips" %}</th>
+          <th scope="col" class="text-end">{% translate "Comments" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for u in users %}
+          <tr>
+            <td class="dash-user">
+              {% include "accounts/_avatar.html" with profile=u.profile size="sm" %}
+              <strong>{{ u.profile.full_name|default:"—" }}</strong>
+              {% if u.is_staff %}<span class="tag tag-best">{% translate "Staff" %}</span>{% endif %}
+              {% if not u.is_active %}<span class="tag tag-change">{% translate "Inactive" %}</span>{% endif %}
+            </td>
+            <td class="text-nowrap"><a href="tel:{{ u.username }}">{{ u.username|phone }}</a></td>
+            <td>{% if u.email %}<a href="mailto:{{ u.email }}">{{ u.email }}</a>{% else %}—{% endif %}</td>
+            <td>{{ u.profile.home_area|default:"—" }}</td>
+            <td class="text-nowrap">{{ u.date_joined|date:"j M Y, H:i" }}</td>
+            <td class="text-end">{{ u.n_searches }}</td>
+            <td class="text-end">{{ u.n_saved }}</td>
+            <td class="text-end">{% if u.n_reports %}<strong>{{ u.n_reports }}</strong>{% else %}0{% endif %}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="8" class="text-center text-muted py-4">{% translate "No users found." %}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {# ---------------- comments ---------------- #}
+  <div class="dash-head" id="comments">
+    <h2 class="panel-title mb-0">{% translate "Comments" %}</h2>
+    <nav class="dash-filter" aria-label="{% translate "Filter comments" %}">
+      <a href="?{% if q %}q={{ q|urlencode }}&{% endif %}#comments" class="{% if not status %}active{% endif %}">{% translate "All" %}</a>
+      {% for value, label in status_choices %}
+        <a href="?{% if q %}q={{ q|urlencode }}&{% endif %}status={{ value }}#comments" class="{% if status == value %}active{% endif %}">{{ label }}</a>
+      {% endfor %}
+    </nav>
+  </div>
+
+  <div class="comment-list">
+    {% for c in comments %}
+      <article class="comment comment-{{ c.status }}">
+        <header class="comment-head">
+          <span class="comment-who">
+            <strong>{{ c.user.profile.full_name|default:c.name|default:_("Unknown") }}</strong>
+            {% if c.phone %}· <a href="tel:{{ c.phone }}">{{ c.phone }}</a>{% elif c.user %}· <a href="tel:{{ c.user.username }}">{{ c.user.username|phone }}</a>{% endif %}
+          </span>
+          <time class="comment-when" datetime="{{ c.created_at|date:'c' }}">{{ c.created_at|date:"j M Y, H:i" }}</time>
+        </header>
+        {% if c.route %}<p class="comment-route">{% translate "Route" %}: <a href="{% url 'routes:route_detail' c.route.pk %}">{{ c.route.name }}</a></p>{% endif %}
+        <p class="comment-text">{{ c.message|linebreaksbr }}</p>
+        <form method="post" action="{% url 'accounts:set_comment_status' c.pk %}" class="comment-status">
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{{ request.get_full_path }}#comments">
+          <span class="text-muted small">{% translate "Status" %}:</span>
+          {% for value, label in status_choices %}
+            <button type="submit" name="status" value="{{ value }}"
+                    class="status-btn status-{{ value }}{% if c.status == value %} active{% endif %}"
+                    aria-pressed="{% if c.status == value %}true{% else %}false{% endif %}">{{ label }}</button>
+          {% endfor %}
+        </form>
+      </article>
+    {% empty %}
+      <div class="empty">{% translate "No comments here yet." %}</div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

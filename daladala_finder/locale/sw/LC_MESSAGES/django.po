@@ -1,0 +1,1009 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Daladala Finder\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-30 00:09+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: sw\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: accounts/forms.py:23 accounts/forms.py:78
+#: accounts/templates/accounts/profile.html:53
+msgid "Phone number"
+msgstr "Namba ya simu"
+
+#: accounts/forms.py:27
+msgid "PIN"
+msgstr "PIN"
+
+#: accounts/forms.py:33
+msgid "Wrong phone number or PIN. Please try again."
+msgstr "Namba ya simu au PIN si sahihi. Tafadhali jaribu tena."
+
+#: accounts/forms.py:34
+msgid "This account is not active."
+msgstr "Akaunti hii haitumiki."
+
+#: accounts/forms.py:35
+#, python-format
+msgid "Too many wrong PINs. For your safety this account is locked. Try again in %(minutes)s minute(s)."
+msgstr "Umekosea PIN mara nyingi. Kwa usalama wako akaunti hii imefungwa. Jaribu tena baada ya dakika %(minutes)s."
+
+#: accounts/forms.py:76 accounts/forms.py:125
+msgid "Full name"
+msgstr "Jina kamili"
+
+#: accounts/forms.py:77
+msgid "e.g. Asha Juma"
+msgstr "mfano Asha Juma"
+
+#: accounts/forms.py:81 accounts/forms.py:126
+msgid "Email (optional)"
+msgstr "Barua pepe (si lazima)"
+
+#: accounts/forms.py:83 accounts/forms.py:127
+msgid "Home area (optional)"
+msgstr "Eneo unaloishi (si lazima)"
+
+#: accounts/forms.py:84
+msgid "e.g. Kimara"
+msgstr "mfano Kimara"
+
+#: accounts/forms.py:85
+msgid "Choose a 4-digit PIN"
+msgstr "Chagua PIN ya tarakimu 4"
+
+#: accounts/forms.py:87 accounts/forms.py:170
+msgid "4 numbers. Not an easy one like 1234 or 0000."
+msgstr "Namba 4. Isiwe rahisi kama 1234 au 0000."
+
+#: accounts/forms.py:88
+msgid "Confirm PIN"
+msgstr "Thibitisha PIN"
+
+#: accounts/forms.py:98
+msgid "An account with this phone number already exists. Log in instead."
+msgstr "Akaunti yenye namba hii ya simu tayari ipo. Ingia badala yake."
+
+#: accounts/forms.py:110 accounts/forms.py:193
+msgid "The two PINs are not the same."
+msgstr "PIN mbili hazifanani."
+
+#: accounts/forms.py:149 accounts/templates/accounts/profile.html:25
+msgid "Profile photo"
+msgstr "Picha ya wasifu"
+
+#: accounts/forms.py:164
+msgid "Current PIN"
+msgstr "PIN ya sasa"
+
+#: accounts/forms.py:167
+msgid "If your account still has an old password, type that instead."
+msgstr "Kama akaunti yako bado ina nenosiri la zamani, liandike hilo."
+
+#: accounts/forms.py:168
+msgid "New 4-digit PIN"
+msgstr "PIN mpya ya tarakimu 4"
+
+#: accounts/forms.py:171
+msgid "Confirm new PIN"
+msgstr "Thibitisha PIN mpya"
+
+#: accounts/forms.py:181
+msgid "Your current PIN is not correct."
+msgstr "PIN yako ya sasa si sahihi."
+
+#: accounts/phone.py:15
+msgid "Enter a valid Tanzanian mobile number, e.g. 0712 345 678."
+msgstr "Weka namba sahihi ya simu ya Tanzania, mfano 0712 345 678."
+
+#: accounts/photos.py:25
+#, python-format
+msgid "This photo is too big. Choose one smaller than %(mb)s MB."
+msgstr "Picha hii ni kubwa mno. Chagua iliyo chini ya MB %(mb)s."
+
+#: accounts/photos.py:30
+msgid "This file is not a photo. Choose a JPG, PNG or WEBP picture."
+msgstr "Faili hili si picha. Chagua picha ya JPG, PNG au WEBP."
+
+#: accounts/pin.py:24
+msgid "Your PIN must be exactly 4 numbers."
+msgstr "PIN yako lazima iwe namba 4 kamili."
+
+#: accounts/pin.py:26
+msgid "This PIN is too easy to guess. Choose another one."
+msgstr "PIN hii ni rahisi mno kukisia. Chagua nyingine."
+
+#: accounts/templates/accounts/dashboard.html:3
+#: accounts/templates/accounts/dashboard.html:8
+#: routes/templates/routes/base.html:39
+msgid "Staff dashboard"
+msgstr "Dashibodi ya wafanyakazi"
+
+#: accounts/templates/accounts/dashboard.html:7
+msgid "Staff only"
+msgstr "Wafanyakazi tu"
+
+#: accounts/templates/accounts/dashboard.html:9
+msgid "Everyone who registered, and every comment they sent."
+msgstr "Kila aliyejisajili, na kila maoni aliyotuma."
+
+#: accounts/templates/accounts/dashboard.html:11
+#: accounts/templates/accounts/dashboard.html:28
+msgid "Registrations"
+msgstr "Waliojisajili"
+
+#: accounts/templates/accounts/dashboard.html:12
+#: accounts/templates/accounts/dashboard.html:51
+#: accounts/templates/accounts/dashboard.html:80
+msgid "Comments"
+msgstr "Maoni"
+
+#: accounts/templates/accounts/dashboard.html:13
+#: routes/templates/routes/base.html:40
+msgid "Admin panel"
+msgstr "Paneli ya msimamizi"
+
+#: accounts/templates/accounts/dashboard.html:20
+msgid "registered users"
+msgstr "watumiaji waliojisajili"
+
+#: accounts/templates/accounts/dashboard.html:21
+msgid "new in the last 7 days"
+msgstr "wapya ndani ya siku 7"
+
+#: accounts/templates/accounts/dashboard.html:22
+msgid "comments"
+msgstr "maoni"
+
+#: accounts/templates/accounts/dashboard.html:23
+msgid "not checked yet"
+msgstr "bado hayajakaguliwa"
+
+#: accounts/templates/accounts/dashboard.html:31
+msgid "Search users"
+msgstr "Tafuta watumiaji"
+
+#: accounts/templates/accounts/dashboard.html:33
+msgid "Name, phone, email or area"
+msgstr "Jina, simu, barua pepe au eneo"
+
+#: accounts/templates/accounts/dashboard.html:34
+#: routes/templates/routes/base.html:25 routes/templates/routes/base.html:88
+msgid "Search"
+msgstr "Tafuta"
+
+#: accounts/templates/accounts/dashboard.html:35
+msgid "Clear"
+msgstr "Futa"
+
+#: accounts/templates/accounts/dashboard.html:38
+#, python-format
+msgid "%(counter)s user matches “%(q)s”."
+msgid_plural "%(counter)s users match “%(q)s”."
+msgstr[0] "Mtumiaji %(counter)s analingana na “%(q)s”."
+msgstr[1] "Watumiaji %(counter)s wanalingana na “%(q)s”."
+
+#: accounts/templates/accounts/dashboard.html:44
+msgid "Name"
+msgstr "Jina"
+
+#: accounts/templates/accounts/dashboard.html:45
+msgid "Phone"
+msgstr "Simu"
+
+#: accounts/templates/accounts/dashboard.html:46
+msgid "Email"
+msgstr "Barua pepe"
+
+#: accounts/templates/accounts/dashboard.html:47
+msgid "Home area"
+msgstr "Eneo analoishi"
+
+#: accounts/templates/accounts/dashboard.html:48
+msgid "Registered"
+msgstr "Alijisajili"
+
+#: accounts/templates/accounts/dashboard.html:49
+msgid "Searches"
+msgstr "Utafutaji"
+
+#: accounts/templates/accounts/dashboard.html:50
+#: accounts/templates/accounts/my_trips.html:16
+msgid "Saved trips"
+msgstr "Safari zilizohifadhiwa"
+
+#: accounts/templates/accounts/dashboard.html:60
+msgid "Staff"
+msgstr "Mfanyakazi"
+
+#: accounts/templates/accounts/dashboard.html:61
+msgid "Inactive"
+msgstr "Haitumiki"
+
+#: accounts/templates/accounts/dashboard.html:72
+msgid "No users found."
+msgstr "Hakuna watumiaji waliopatikana."
+
+#: accounts/templates/accounts/dashboard.html:81
+msgid "Filter comments"
+msgstr "Chuja maoni"
+
+#: accounts/templates/accounts/dashboard.html:82
+msgid "All"
+msgstr "Yote"
+
+#: accounts/templates/accounts/dashboard.html:94
+msgid "Unknown"
+msgstr "Hajulikani"
+
+#: accounts/templates/accounts/dashboard.html:99
+msgid "Route"
+msgstr "Njia"
+
+#: accounts/templates/accounts/dashboard.html:104
+msgid "Status"
+msgstr "Hali"
+
+#: accounts/templates/accounts/dashboard.html:113
+msgid "No comments here yet."
+msgstr "Bado hakuna maoni hapa."
+
+#: accounts/templates/accounts/login.html:3
+#: accounts/templates/accounts/login.html:9
+#: accounts/templates/accounts/login.html:20
+#: accounts/templates/accounts/signup.html:25
+#: routes/templates/routes/base.html:51 routes/templates/routes/base.html:93
+msgid "Log in"
+msgstr "Ingia"
+
+#: accounts/templates/accounts/login.html:8
+msgid "Karibu tena"
+msgstr "Karibu tena"
+
+#: accounts/templates/accounts/login.html:10
+msgid "Log in with your phone number and 4-digit PIN."
+msgstr "Ingia kwa namba yako ya simu na PIN ya tarakimu 4."
+
+#: accounts/templates/accounts/login.html:22
+msgid "New here?"
+msgstr "Mgeni hapa?"
+
+#: accounts/templates/accounts/login.html:22
+msgid "Create a free account"
+msgstr "Fungua akaunti bure"
+
+#: accounts/templates/accounts/my_trips.html:3
+#: accounts/templates/accounts/my_trips.html:8
+#: routes/templates/routes/base.html:27 routes/templates/routes/base.html:36
+#: routes/templates/routes/base.html:90
+msgid "My trips"
+msgstr "Safari zangu"
+
+#: accounts/templates/accounts/my_trips.html:7
+msgid "Your account"
+msgstr "Akaunti yako"
+
+#: accounts/templates/accounts/my_trips.html:9
+msgid "Trips you saved, and the trips you searched for recently."
+msgstr "Safari ulizohifadhi, na safari ulizotafuta hivi karibuni."
+
+#: accounts/templates/accounts/my_trips.html:21
+#: routes/templates/routes/home.html:18 routes/templates/routes/home.html:26
+#: routes/templates/routes/home.html:33 routes/templates/routes/results.html:10
+msgid "to"
+msgstr "hadi"
+
+#: accounts/templates/accounts/my_trips.html:24
+msgid "Edit"
+msgstr "Hariri"
+
+#: accounts/templates/accounts/my_trips.html:27
+msgid "Trip name"
+msgstr "Jina la safari"
+
+#: accounts/templates/accounts/my_trips.html:28
+msgid "Name, e.g. To college"
+msgstr "Jina, mfano Kwenda chuoni"
+
+#: accounts/templates/accounts/my_trips.html:29
+#: accounts/templates/accounts/profile.html:58
+msgid "Save"
+msgstr "Hifadhi"
+
+#: accounts/templates/accounts/my_trips.html:33
+msgid "Remove this trip"
+msgstr "Ondoa safari hii"
+
+#: accounts/templates/accounts/my_trips.html:39
+msgid "No saved trips yet."
+msgstr "Bado hujahifadhi safari yoyote."
+
+#: accounts/templates/accounts/my_trips.html:40
+msgid "Search for a trip, then tap <strong>&#9734; Save trip</strong> on the results page."
+msgstr "Tafuta safari, kisha bonyeza <strong>&#9734; Hifadhi safari</strong> kwenye ukurasa wa majibu."
+
+#: accounts/templates/accounts/my_trips.html:47
+msgid "Recent searches"
+msgstr "Ulizotafuta hivi karibuni"
+
+#: accounts/templates/accounts/my_trips.html:51
+msgid "Clear history"
+msgstr "Futa historia"
+
+#: accounts/templates/accounts/my_trips.html:63
+#, python-format
+msgid "from TSh %(fare)s"
+msgstr "kuanzia TSh %(fare)s"
+
+#: accounts/templates/accounts/my_trips.html:63
+msgid "no route found"
+msgstr "hakuna njia iliyopatikana"
+
+#: accounts/templates/accounts/my_trips.html:72
+msgid "Remove from saved trips"
+msgstr "Ondoa kwenye safari zilizohifadhiwa"
+
+#: accounts/templates/accounts/my_trips.html:72
+#, python-format
+msgid "Remove %(start)s to %(destination)s from saved trips"
+msgstr "Ondoa %(start)s hadi %(destination)s kwenye safari zilizohifadhiwa"
+
+#: accounts/templates/accounts/my_trips.html:74
+msgid "Save this trip"
+msgstr "Hifadhi safari hii"
+
+#: accounts/templates/accounts/my_trips.html:74
+#, python-format
+msgid "Save %(start)s to %(destination)s"
+msgstr "Hifadhi %(start)s hadi %(destination)s"
+
+#: accounts/templates/accounts/my_trips.html:80
+#, python-format
+msgid "%(counter)s search in total."
+msgid_plural "%(counter)s searches in total."
+msgstr[0] "Utafutaji %(counter)s kwa jumla."
+msgstr[1] "Utafutaji %(counter)s kwa jumla."
+
+#: accounts/templates/accounts/my_trips.html:82
+msgid "Your searches will appear here."
+msgstr "Utafutaji wako utaonekana hapa."
+
+#: accounts/templates/accounts/password_change.html:3
+#: accounts/templates/accounts/password_change.html:9
+#: accounts/templates/accounts/password_change.html:14
+msgid "Change password"
+msgstr "Badilisha nenosiri"
+
+#: accounts/templates/accounts/password_change.html:8
+#: accounts/templates/accounts/pin_change.html:8
+#: accounts/templates/accounts/profile.html:3
+#: accounts/templates/accounts/profile.html:8
+#: routes/templates/routes/base.html:35
+msgid "My profile"
+msgstr "Wasifu wangu"
+
+#: accounts/templates/accounts/pin_change.html:3
+#: accounts/templates/accounts/pin_change.html:9
+#: accounts/templates/accounts/pin_change.html:15
+#: accounts/templates/accounts/profile.html:59
+#: routes/templates/routes/base.html:37
+msgid "Change PIN"
+msgstr "Badilisha PIN"
+
+#: accounts/templates/accounts/pin_change.html:10
+msgid "Choose a new 4-digit PIN. Keep it secret, like your mobile money PIN."
+msgstr "Chagua PIN mpya ya tarakimu 4. Iweke siri, kama PIN yako ya pesa kwa simu."
+
+#: accounts/templates/accounts/profile.html:7
+#: routes/templates/routes/base.html:32
+msgid "Account"
+msgstr "Akaunti"
+
+#: accounts/templates/accounts/profile.html:9
+#, python-format
+msgid "Logged in as <strong>%(name)s</strong>, phone %(phone)s. Member since %(since)s."
+msgstr "Umeingia kama <strong>%(name)s</strong>, simu %(phone)s. Mwanachama tangu %(since)s."
+
+#: accounts/templates/accounts/profile.html:17
+msgid "saved trips"
+msgstr "safari zilizohifadhiwa"
+
+#: accounts/templates/accounts/profile.html:18
+msgid "searches"
+msgstr "utafutaji"
+
+#: accounts/templates/accounts/profile.html:19
+msgid "problems reported"
+msgstr "matatizo yaliyoripotiwa"
+
+#: accounts/templates/accounts/profile.html:26
+msgid "A clear photo of your face. JPG, PNG or WEBP, up to 5 MB. It is cut to a square."
+msgstr "Picha inayoonyesha uso wako vizuri. JPG, PNG au WEBP, hadi MB 5. Itakatwa kuwa mraba."
+
+#: accounts/templates/accounts/profile.html:32
+msgid "Change photo"
+msgstr "Badilisha picha"
+
+#: accounts/templates/accounts/profile.html:32
+msgid "Add a photo"
+msgstr "Weka picha"
+
+#: accounts/templates/accounts/profile.html:33
+#: accounts/templates/accounts/profile.html:115
+msgid "Uploading..."
+msgstr "Inapakia..."
+
+#: accounts/templates/accounts/profile.html:35
+msgid "Upload"
+msgstr "Pakia"
+
+#: accounts/templates/accounts/profile.html:38
+#| msgid "Add a photo"
+msgid "Adjust photo"
+msgstr "Rekebisha picha"
+
+#: accounts/templates/accounts/profile.html:41
+msgid "Remove photo"
+msgstr "Ondoa picha"
+
+#: accounts/templates/accounts/profile.html:50
+msgid "Your details"
+msgstr "Taarifa zako"
+
+#: accounts/templates/accounts/profile.html:55
+msgid "Your phone number is your login, so it cannot be changed here."
+msgstr "Namba yako ya simu ndiyo unayotumia kuingia, kwa hiyo haiwezi kubadilishwa hapa."
+
+#: accounts/templates/accounts/profile.html:67
+#| msgid "Add a photo"
+msgid "Adjust your photo"
+msgstr "Rekebisha picha yako"
+
+#: accounts/templates/accounts/profile.html:68
+msgid "Drag to move. Zoom so your face fills the circle."
+msgstr "Buruta kuisogeza. Kuza ili uso wako ujaze duara."
+
+#: accounts/templates/accounts/profile.html:72
+msgid "Photo preview. Drag or use the arrow keys to move, plus and minus to zoom."
+msgstr "Onyesho la picha. Buruta au tumia vitufe vya mishale kusogeza, jumlisha na toa kukuza."
+
+#: accounts/templates/accounts/profile.html:74
+msgid "This picture cannot be opened here. Try a JPG or PNG photo."
+msgstr "Picha hii haiwezi kufunguliwa hapa. Jaribu picha ya JPG au PNG."
+
+#: accounts/templates/accounts/profile.html:79
+msgid "Zoom"
+msgstr "Kuza"
+
+#: accounts/templates/accounts/profile.html:82
+msgid "Rotate and flip"
+msgstr "Zungusha na geuza"
+
+#: accounts/templates/accounts/profile.html:83
+msgid "Rotate left"
+msgstr "Zungusha kushoto"
+
+#: accounts/templates/accounts/profile.html:86
+msgid "Rotate right"
+msgstr "Zungusha kulia"
+
+#: accounts/templates/accounts/profile.html:89
+msgid "Flip"
+msgstr "Geuza"
+
+#: accounts/templates/accounts/profile.html:92
+msgid "Reset"
+msgstr "Anza upya"
+
+#: accounts/templates/accounts/profile.html:96
+msgid "Light and colour"
+msgstr "Mwanga na rangi"
+
+#: accounts/templates/accounts/profile.html:98
+msgid "Brightness"
+msgstr "Mwangaza"
+
+#: accounts/templates/accounts/profile.html:102
+msgid "Contrast"
+msgstr "Utofautishaji"
+
+#: accounts/templates/accounts/profile.html:106
+msgid "Colour"
+msgstr "Rangi"
+
+#: accounts/templates/accounts/profile.html:113
+msgid "Cancel"
+msgstr "Ghairi"
+
+#: accounts/templates/accounts/profile.html:115
+#| msgid "Remove photo"
+msgid "Save photo"
+msgstr "Hifadhi picha"
+
+#: accounts/templates/accounts/signup.html:3
+#: accounts/templates/accounts/signup.html:9
+#: routes/templates/routes/base.html:94
+msgid "Create an account"
+msgstr "Fungua akaunti"
+
+#: accounts/templates/accounts/signup.html:8
+msgid "Free, takes one minute"
+msgstr "Bure, inachukua dakika moja"
+
+#: accounts/templates/accounts/signup.html:10
+msgid "Your account keeps your saved trips and search history on any phone or computer."
+msgstr "Akaunti yako inahifadhi safari zako na historia ya utafutaji kwenye simu au kompyuta yoyote."
+
+#: accounts/templates/accounts/signup.html:23
+msgid "Create account"
+msgstr "Fungua akaunti"
+
+#: accounts/templates/accounts/signup.html:25
+msgid "Already have an account?"
+msgstr "Tayari una akaunti?"
+
+#: accounts/views.py:47
+#, python-format
+msgid "Karibu, %(name)s! Your account is ready."
+msgstr "Karibu, %(name)s! Akaunti yako iko tayari."
+
+#: accounts/views.py:57
+msgid "Profile saved."
+msgstr "Wasifu umehifadhiwa."
+
+#: accounts/views.py:73
+msgid "Profile photo saved."
+msgstr "Picha ya wasifu imehifadhiwa."
+
+#: accounts/views.py:83
+msgid "Profile photo removed."
+msgstr "Picha ya wasifu imeondolewa."
+
+#: accounts/views.py:92
+msgid "PIN changed."
+msgstr "PIN imebadilishwa."
+
+#: accounts/views.py:124
+#, python-format
+msgid "Removed %(start)s to %(destination)s from your saved trips."
+msgstr "%(start)s hadi %(destination)s imeondolewa kwenye safari zako zilizohifadhiwa."
+
+#: accounts/views.py:126
+#, python-format
+msgid "Saved %(start)s to %(destination)s. Find it on the home page and in My trips."
+msgstr "%(start)s hadi %(destination)s imehifadhiwa. Utaipata ukurasa wa mwanzo na kwenye Safari zangu."
+
+#: accounts/views.py:135
+msgid "Trip name saved."
+msgstr "Jina la safari limehifadhiwa."
+
+#: accounts/views.py:142
+msgid "Trip removed."
+msgstr "Safari imeondolewa."
+
+#: accounts/views.py:149
+msgid "Search history cleared."
+msgstr "Historia ya utafutaji imefutwa."
+
+#: routes/forms.py:18 routes/templates/routes/_search_form.html:7
+msgid "From"
+msgstr "Kutoka"
+
+#: routes/forms.py:19 routes/templates/routes/_search_form.html:21
+msgid "To"
+msgstr "Kwenda"
+
+#: routes/forms.py:26 routes/forms.py:28
+msgid "We don't have this stop yet. Pick one from the list."
+msgstr "Bado hatuna kituo hiki. Chagua kimoja kwenye orodha."
+
+#: routes/forms.py:30
+msgid "Start and destination are the same stop."
+msgstr "Mahali pa kuanzia na unakoenda ni kituo kimoja."
+
+#: routes/forms.py:40
+msgid "Your name (optional)"
+msgstr "Jina lako (si lazima)"
+
+#: routes/forms.py:41
+msgid "Phone number (optional)"
+msgstr "Namba ya simu (si lazima)"
+
+#: routes/forms.py:42
+msgid "Which route is it about? (optional)"
+msgstr "Ni kuhusu njia gani? (si lazima)"
+
+#: routes/forms.py:43
+msgid "What is wrong or missing?"
+msgstr "Nini si sahihi au kinakosekana?"
+
+#: routes/models.py:86
+msgid "New"
+msgstr "Mapya"
+
+#: routes/models.py:86
+msgid "Checked"
+msgstr "Yamekaguliwa"
+
+#: routes/models.py:86
+msgid "Fixed"
+msgstr "Yamerekebishwa"
+
+#: routes/templates/routes/_search_form.html:11
+#: routes/templates/routes/_search_form.html:25
+msgid "e.g."
+msgstr "mfano"
+
+#: routes/templates/routes/_search_form.html:16
+msgid "Swap From and To"
+msgstr "Badilisha Kutoka na Kwenda"
+
+#: routes/templates/routes/_search_form.html:33
+msgid "Find daladala"
+msgstr "Tafuta daladala"
+
+#: routes/templates/routes/base.html:14
+msgid "Skip to content"
+msgstr "Ruka hadi maudhui"
+
+#: routes/templates/routes/base.html:17
+msgid "Main"
+msgstr "Kuu"
+
+#: routes/templates/routes/base.html:26
+msgid "Routes"
+msgstr "Njia"
+
+#: routes/templates/routes/base.html:28
+msgid "Report"
+msgstr "Ripoti"
+
+#: routes/templates/routes/base.html:30
+msgid "Account menu"
+msgstr "Menyu ya akaunti"
+
+#: routes/templates/routes/base.html:44
+msgid "Log out"
+msgstr "Toka"
+
+#: routes/templates/routes/base.html:52
+msgid "Sign up"
+msgstr "Jisajili"
+
+#: routes/templates/routes/base.html:57
+msgid "Language"
+msgstr "Lugha"
+
+#: routes/templates/routes/base.html:83
+msgid "Find which daladala to take in Dar es Salaam, where to change, and what it costs."
+msgstr "Jua daladala ya kupanda Dar es Salaam, mahali pa kubadilisha, na gharama yake."
+
+#: routes/templates/routes/base.html:86
+msgid "Pages"
+msgstr "Kurasa"
+
+#: routes/templates/routes/base.html:89
+#: routes/templates/routes/route_detail.html:7
+#: routes/templates/routes/route_list.html:3
+#: routes/templates/routes/route_list.html:8
+#: routes/templates/routes/stop_detail.html:7
+msgid "All routes"
+msgstr "Njia zote"
+
+#: routes/templates/routes/base.html:91 routes/templates/routes/feedback.html:3
+#: routes/templates/routes/feedback.html:8
+msgid "Report a problem"
+msgstr "Ripoti tatizo"
+
+#: routes/templates/routes/base.html:98
+msgid "Good to know"
+msgstr "Vizuri kujua"
+
+#: routes/templates/routes/base.html:99
+msgid "Fares are guides only. Confirm with the conductor before you pay."
+msgstr "Nauli ni makadirio tu. Thibitisha na kondakta kabla ya kulipa."
+
+#: routes/templates/routes/base.html:102
+msgid "Student project, Dar es Salaam Institute of Technology"
+msgstr "Mradi wa mwanafunzi, Taasisi ya Teknolojia Dar es Salaam"
+
+#: routes/templates/routes/base.html:108
+msgid "Show my location"
+msgstr "Onyesha nilipo"
+
+#: routes/templates/routes/base.html:109
+msgid "You are here"
+msgstr "Uko hapa"
+
+#: routes/templates/routes/base.html:110
+#, python-format
+msgid "within %%(m)s m"
+msgstr "ndani ya mita %%(m)s"
+
+#: routes/templates/routes/base.html:111
+msgid "Nearest stop"
+msgstr "Kituo cha karibu"
+
+#: routes/templates/routes/base.html:112
+msgid "Board here"
+msgstr "Panda hapa"
+
+#: routes/templates/routes/base.html:113
+msgid "Change here"
+msgstr "Badilisha gari hapa"
+
+#: routes/templates/routes/base.html:114
+msgid "Get off"
+msgstr "Shuka"
+
+#: routes/templates/routes/base.html:115
+msgid "Location is blocked. Allow it for this site in your browser settings."
+msgstr "Mahali ulipo pamezuiwa. Iruhusu tovuti hii kwenye mipangilio ya kivinjari chako."
+
+#: routes/templates/routes/base.html:116
+msgid "Could not find your location. Try again outside or with GPS on."
+msgstr "Imeshindikana kupata mahali ulipo. Jaribu tena ukiwa nje au GPS ikiwa imewashwa."
+
+#: routes/templates/routes/feedback.html:7
+msgid "Help us improve"
+msgstr "Tusaidie kuboresha"
+
+#: routes/templates/routes/feedback.html:9
+msgid "A route changed, a fare is wrong, or a stop is missing? Tell us and we will update it."
+msgstr "Njia imebadilika, nauli si sahihi, au kituo hakipo? Tuambie nasi tutarekebisha."
+
+#: routes/templates/routes/feedback.html:25
+msgid "Send feedback"
+msgstr "Tuma maoni"
+
+#: routes/templates/routes/home.html:8
+#, python-format
+msgid "Habari, %(name)s!"
+msgstr "Habari, %(name)s!"
+
+#: routes/templates/routes/home.html:8
+msgid "Habari!"
+msgstr "Habari!"
+
+#: routes/templates/routes/home.html:9
+msgid "Unaenda wapi?"
+msgstr "Unaenda wapi?"
+
+#: routes/templates/routes/home.html:10
+msgid "Where are you going? Enter two stops and see which daladala to take, where to change, and what it costs."
+msgstr "Andika vituo viwili uone daladala ya kupanda, mahali pa kubadilisha, na nauli yake."
+
+#: routes/templates/routes/home.html:16
+msgid "Your trips:"
+msgstr "Safari zako:"
+
+#: routes/templates/routes/home.html:24
+msgid "Recent:"
+msgstr "Hivi karibuni:"
+
+#: routes/templates/routes/home.html:31
+msgid "Popular:"
+msgstr "Maarufu:"
+
+#: routes/templates/routes/home.html:40
+msgid "Map of daladala routes and stops"
+msgstr "Ramani ya njia na vituo vya daladala"
+
+#: routes/templates/routes/home.html:41
+msgid "Routes on the map"
+msgstr "Njia kwenye ramani"
+
+#: routes/templates/routes/home.html:54
+msgid "routes"
+msgstr "njia"
+
+#: routes/templates/routes/home.html:55
+msgid "stops"
+msgstr "vituo"
+
+#: routes/templates/routes/home.html:56
+msgid "Free"
+msgstr "Bure"
+
+#: routes/templates/routes/home.html:56
+msgid "no cost to use"
+msgstr "hakuna gharama"
+
+#: routes/templates/routes/home.html:59
+msgid "How it works"
+msgstr "Jinsi inavyofanya kazi"
+
+#: routes/templates/routes/home.html:63
+msgid "Choose your stops"
+msgstr "Chagua vituo vyako"
+
+#: routes/templates/routes/home.html:64
+msgid "Type where you are and where you are going. Stop names show as you type."
+msgstr "Andika ulipo na unakoenda. Majina ya vituo yataonekana unapoandika."
+
+#: routes/templates/routes/home.html:68
+msgid "Compare options"
+msgstr "Linganisha njia"
+
+#: routes/templates/routes/home.html:69
+msgid "See direct daladalas first, then trips with a change, cheapest at the top."
+msgstr "Daladala za moja kwa moja zinaonyeshwa kwanza, kisha safari za kubadilisha gari, nafuu zaidi juu."
+
+#: routes/templates/routes/home.html:73
+msgid "Ride with confidence"
+msgstr "Safiri kwa uhakika"
+
+#: routes/templates/routes/home.html:74
+msgid "Know where to board, which way the daladala is heading, and where to get off."
+msgstr "Jua mahali pa kupanda, daladala inaelekea wapi, na mahali pa kushuka."
+
+#: routes/templates/routes/results.html:3
+#, python-format
+msgid "%(start)s to %(destination)s"
+msgstr "%(start)s hadi %(destination)s"
+
+#: routes/templates/routes/results.html:7
+msgid "Trip options"
+msgstr "Njia za safari"
+
+#: routes/templates/routes/results.html:20
+msgid "Saved"
+msgstr "Imehifadhiwa"
+
+#: routes/templates/routes/results.html:22
+msgid "Save trip"
+msgstr "Hifadhi safari"
+
+#: routes/templates/routes/results.html:26
+msgid "Change search"
+msgstr "Badilisha utafutaji"
+
+#: routes/templates/routes/results.html:37
+#, python-format
+msgid "%(counter)s option, fewest changes and cheapest first. Tap one to see it on the map."
+msgid_plural "%(counter)s options, fewest changes and cheapest first. Tap one to see it on the map."
+msgstr[0] "Njia %(counter)s, yenye mabadiliko machache na nafuu zaidi kwanza. Bonyeza moja uione kwenye ramani."
+msgstr[1] "Njia %(counter)s, zenye mabadiliko machache na nafuu zaidi kwanza. Bonyeza moja uione kwenye ramani."
+
+#: routes/templates/routes/results.html:43
+msgid "Best"
+msgstr "Bora"
+
+#: routes/templates/routes/results.html:44
+msgid "Direct"
+msgstr "Moja kwa moja"
+
+#: routes/templates/routes/results.html:45
+#, python-format
+msgid "%(counter)s change"
+msgid_plural "%(counter)s changes"
+msgstr[0] "Badiliko %(counter)s"
+msgstr[1] "Mabadiliko %(counter)s"
+
+#: routes/templates/routes/results.html:46
+#: routes/templates/routes/route_detail.html:11
+#: routes/templates/routes/route_list.html:34
+#, python-format
+msgid "%(counter)s stop"
+msgid_plural "%(counter)s stops"
+msgstr[0] "Kituo %(counter)s"
+msgstr[1] "Vituo %(counter)s"
+
+#: routes/templates/routes/results.html:52
+#, python-format
+msgid "Change at <strong>%(stop)s</strong>"
+msgstr "Badilisha gari <strong>%(stop)s</strong>"
+
+#: routes/templates/routes/results.html:60
+#, python-format
+msgid "Board at <strong>%(board)s</strong> (heading to %(towards)s), get off at <strong>%(alight)s</strong> after %(counter)s stop."
+msgid_plural "Board at <strong>%(board)s</strong> (heading to %(towards)s), get off at <strong>%(alight)s</strong> after %(counter)s stops."
+msgstr[0] "Panda <strong>%(board)s</strong> (inayoelekea %(towards)s), shuka <strong>%(alight)s</strong> baada ya kituo %(counter)s."
+msgstr[1] "Panda <strong>%(board)s</strong> (inayoelekea %(towards)s), shuka <strong>%(alight)s</strong> baada ya vituo %(counter)s."
+
+#: routes/templates/routes/results.html:76
+msgid "No daladala connects these stops yet"
+msgstr "Bado hakuna daladala inayounganisha vituo hivi"
+
+#: routes/templates/routes/results.html:77
+msgid "Our data covers only some routes so far. Try a nearby main stop like Kariakoo, Ubungo or Mwenge."
+msgstr "Kwa sasa tuna taarifa za baadhi ya njia tu. Jaribu kituo kikubwa kilicho karibu kama Kariakoo, Ubungo au Mwenge."
+
+#: routes/templates/routes/results.html:78
+msgid "Tell us about a route"
+msgstr "Tuambie kuhusu njia"
+
+#: routes/templates/routes/results.html:84
+msgid "Map of the selected journey"
+msgstr "Ramani ya safari uliyochagua"
+
+#: routes/templates/routes/route_detail.html:10
+#, python-format
+msgid "TSh %(fare)s full fare"
+msgstr "TSh %(fare)s nauli kamili"
+
+#: routes/templates/routes/route_detail.html:13
+msgid "Runs both directions"
+msgstr "Huenda pande zote mbili"
+
+#: routes/templates/routes/route_detail.html:22
+msgid "Stops in order"
+msgstr "Vituo kwa mpangilio"
+
+#: routes/templates/routes/route_detail.html:31
+msgid "Something wrong with this route? Report it"
+msgstr "Kuna kosa kwenye njia hii? Ripoti"
+
+#: routes/templates/routes/route_detail.html:35
+#, python-format
+msgid "Map of %(name)s"
+msgstr "Ramani ya %(name)s"
+
+#: routes/templates/routes/route_list.html:7
+msgid "Network"
+msgstr "Mtandao wa njia"
+
+#: routes/templates/routes/route_list.html:9
+msgid "Every daladala route in the system. Daladalas run in both directions."
+msgstr "Njia zote za daladala zilizo kwenye mfumo. Daladala huenda pande zote mbili."
+
+#: routes/templates/routes/route_list.html:12
+msgid "Filter routes or stops"
+msgstr "Chuja njia au vituo"
+
+#: routes/templates/routes/route_list.html:13
+msgid "Filter by route or stop, e.g. Mwenge"
+msgstr "Tafuta kwa njia au kituo, mfano Mwenge"
+
+#: routes/templates/routes/route_list.html:38
+msgid "No routes yet. Add some in the <a href=\"/admin/\">admin panel</a>."
+msgstr "Bado hakuna njia. Ziongeze kwenye <a href=\"/admin/\">paneli ya msimamizi</a>."
+
+#: routes/templates/routes/route_list.html:41
+msgid "No route matches your filter."
+msgstr "Hakuna njia inayolingana na ulichoandika."
+
+#: routes/templates/routes/stop_detail.html:8
+msgid "Stop"
+msgstr "Kituo"
+
+#: routes/templates/routes/stop_detail.html:10
+#, python-format
+msgid "Also called %(other)s."
+msgstr "Pia huitwa %(other)s."
+
+#: routes/templates/routes/stop_detail.html:12
+msgid "Plan a trip from here"
+msgstr "Panga safari kuanzia hapa"
+
+#: routes/templates/routes/stop_detail.html:13
+msgid "Plan a trip to here"
+msgstr "Panga safari kuja hapa"
+
+#: routes/templates/routes/stop_detail.html:21
+msgid "Routes that stop here"
+msgstr "Njia zinazosimama hapa"
+
+#: routes/templates/routes/stop_detail.html:32
+msgid "No routes pass through this stop yet."
+msgstr "Bado hakuna njia zinazopita kituo hiki."
+
+#: routes/templates/routes/stop_detail.html:38
+#, python-format
+msgid "Map showing %(name)s"
+msgstr "Ramani inayoonyesha %(name)s"
+
+#: routes/views.py:147
+msgid "Feedback sent. Thank you, we will check it."
+msgstr "Maoni yametumwa. Asante, tutayafanyia kazi."

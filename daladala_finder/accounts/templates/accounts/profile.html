@@ -1,0 +1,123 @@
+{% extends "routes/base.html" %}
+{% load phone_tags i18n static %}
+{% block title %}{% translate "My profile" %}{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="container narrow">
+    <p class="eyebrow">{% translate "Account" %}</p>
+    <h1 class="page-title">{% translate "My profile" %}</h1>
+    <p class="page-sub">{% blocktranslate trimmed with name=user.profile.full_name|default:user.username phone=user.username|phone since=user.date_joined|date:"j M Y" %}
+      Logged in as <strong>{{ name }}</strong>, phone {{ phone }}. Member since {{ since }}.
+    {% endblocktranslate %}</p>
+  </div>
+</section>
+
+<section class="container narrow py-4">
+  <div class="stats mb-4">
+    <a class="stat stat-link" href="{% url 'accounts:my_trips' %}"><span class="stat-num">{{ stats.saved }}</span><span class="stat-label">{% translate "saved trips" %}</span></a>
+    <a class="stat stat-link" href="{% url 'accounts:my_trips' %}#history"><span class="stat-num">{{ stats.searches }}</span><span class="stat-label">{% translate "searches" %}</span></a>
+    <div class="stat"><span class="stat-num">{{ stats.reports }}</span><span class="stat-label">{% translate "problems reported" %}</span></div>
+  </div>
+
+  <div class="card-panel photo-card mb-4">
+    {% include "accounts/_avatar.html" with profile=user.profile size="xl" %}
+    <div class="photo-card-body">
+      <h2 class="panel-title mb-1">{% translate "Profile photo" %}</h2>
+      <p class="field-help mb-3">{% translate "A clear photo of your face. JPG, PNG or WEBP, up to 5 MB. It is cut to a square." %}</p>
+      <div class="d-flex flex-wrap gap-2">
+        <form method="post" action="{% url 'accounts:upload_photo' %}" enctype="multipart/form-data" class="photo-upload" id="photo-form">
+          {% csrf_token %}
+          <input type="file" name="photo" id="id_photo" class="visually-hidden" accept="{{ photo_form.photo.field.widget.attrs.accept }}">
+          <label for="id_photo" class="btn btn-go">
+            <span class="when-idle">{% if user.profile.photo %}{% translate "Change photo" %}{% else %}{% translate "Add a photo" %}{% endif %}</span>
+            <span class="when-busy">{% translate "Uploading..." %}</span>
+          </label>
+          <noscript><button type="submit" class="btn btn-outline-dark">{% translate "Upload" %}</button></noscript>
+        </form>
+        {% if user.profile.photo %}
+          <button type="button" class="btn btn-outline-dark" data-edit-photo="{{ user.profile.photo.url }}" hidden>{% translate "Adjust photo" %}</button>
+          <form method="post" action="{% url 'accounts:delete_photo' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-dark">{% translate "Remove photo" %}</button>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <form method="post" class="card-panel" novalidate>
+    {% csrf_token %}
+    <h2 class="panel-title">{% translate "Your details" %}</h2>
+    {% for field in form %}{% include "accounts/_field.html" %}{% endfor %}
+    <div class="field">
+      <label>{% translate "Phone number" %}</label>
+      <input class="form-control form-control-lg" value="{{ user.username|phone }}" disabled>
+      <div class="field-help">{% translate "Your phone number is your login, so it cannot be changed here." %}</div>
+    </div>
+    <div class="d-flex flex-wrap gap-2 mt-2">
+      <button type="submit" class="btn btn-go btn-lg">{% translate "Save" %}</button>
+      <a class="btn btn-outline-dark btn-lg" href="{% url 'accounts:pin_change' %}">{% translate "Change PIN" %}</a>
+    </div>
+  </form>
+</section>
+
+{# Photo editor: opens after choosing a picture. Everything happens in the browser; only the result is uploaded. #}
+<dialog class="photo-editor" id="photo-editor" aria-labelledby="photo-editor-title">
+  <form method="dialog" class="photo-editor-inner">
+    <h2 class="panel-title mb-1" id="photo-editor-title">{% translate "Adjust your photo" %}</h2>
+    <p class="field-help mb-2">{% translate "Drag to move. Zoom so your face fills the circle." %}</p>
+
+    <div class="pe-stage">
+      <canvas class="pe-canvas" width="640" height="640" tabindex="0"
+              aria-label="{% translate "Photo preview. Drag or use the arrow keys to move, plus and minus to zoom." %}"></canvas>
+      <div class="pe-ring" aria-hidden="true"></div>
+      <p class="pe-error" hidden role="alert">{% translate "This picture cannot be opened here. Try a JPG or PNG photo." %}</p>
+    </div>
+
+    <div class="pe-controls">
+      <label class="pe-slider">
+        <span>{% translate "Zoom" %}</span>
+        <input type="range" data-pe="zoom" min="1" max="4" step="0.01" value="1">
+      </label>
+      <div class="pe-buttons" role="group" aria-label="{% translate "Rotate and flip" %}">
+        <button type="button" class="pe-btn" data-pe-action="rotate-left" title="{% translate "Rotate left" %}" aria-label="{% translate "Rotate left" %}">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.7M4 4v4.5h4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="pe-btn" data-pe-action="rotate-right" title="{% translate "Rotate right" %}" aria-label="{% translate "Rotate right" %}">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v4.5h-4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="pe-btn" data-pe-action="flip" title="{% translate "Flip" %}" aria-label="{% translate "Flip" %}">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 3v18M8 7 3 17h5V7zm8 0 5 10h-5V7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="pe-btn pe-btn-text" data-pe-action="reset">{% translate "Reset" %}</button>
+      </div>
+
+      <details class="pe-adjust" open>
+        <summary>{% translate "Light and colour" %}</summary>
+        <label class="pe-slider">
+          <span>{% translate "Brightness" %}</span>
+          <input type="range" data-pe="brightness" min="50" max="150" step="1" value="100">
+        </label>
+        <label class="pe-slider">
+          <span>{% translate "Contrast" %}</span>
+          <input type="range" data-pe="contrast" min="50" max="150" step="1" value="100">
+        </label>
+        <label class="pe-slider">
+          <span>{% translate "Colour" %}</span>
+          <input type="range" data-pe="saturate" min="0" max="200" step="1" value="100">
+        </label>
+      </details>
+    </div>
+
+    <div class="pe-footer">
+      <button type="submit" value="cancel" class="btn btn-outline-dark">{% translate "Cancel" %}</button>
+      <button type="button" class="btn btn-go" data-pe-action="save">
+        <span class="when-idle">{% translate "Save photo" %}</span><span class="when-busy">{% translate "Uploading..." %}</span>
+      </button>
+    </div>
+  </form>
+</dialog>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'routes/js/photo-editor.js' %}?v=1"></script>
+{% endblock %}
